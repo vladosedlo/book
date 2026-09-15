@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --book-yellow: #F59E0B;
+    --book-red: #E11D48;
+    --book-dark: #0F172A;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #1e293b;
+    background-color: #faf9f6;
+    overflow-x: hidden;
+  }
+  
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Outfit', sans-serif;
+  }
+}
+
+/* Custom 3D book transform styles */
+.perspective-1000 {
+  perspective: 1200px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.book-shadow {
+  box-shadow: 
+    -12px 18px 30px -10px rgba(15, 23, 42, 0.25),
+    -2px 4px 10px rgba(0, 0, 0, 0.1),
+    inset 4px 0 8px rgba(255, 255, 255, 0.2),
+    inset -4px 0 8px rgba(0, 0, 0, 0.15);
+}
+
+.book-spine-shadow {
+  box-shadow: inset -5px 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar { display: none; }
+
+.min-h-dvh { min-height: 100dvh; }
+.h-dvh { height: 100dvh; }
+@supports not (height: 100dvh) {
+  .h-dvh { height: 100vh; }
+  .min-h-dvh { min-height: 100vh; }
+}
+
+/* Textbook reader: keep every line of content inside the viewport width on
+   phones/tablets. Flex/grid items default to min-width:auto and refuse to shrink
+   below their text, which forced the whole reader wider than the screen and got
+   clipped by body overflow-x:hidden. Allow them to shrink so text wraps instead. */
+#book-pages-section {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+#book-pages-section [class*="flex"] > *,
+#book-pages-section [class*="grid"] > * {
+  min-width: 0;
+}
+@media (max-width: 1023px) {
+  .book-zoom-wrapper {
+    transform: none !important;
+  }
+}
+

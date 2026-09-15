@@ -1,0 +1,6 @@
+{
+  "name": "Deutsch mit Spaß und Quatsch",
+  "description": "Современный сайт учебника немецкого языка для школьников: аннотация, обзор глав и интерактивная практика.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
