@@ -49,7 +49,7 @@ export const VideoLessonsSection: React.FC = () => {
             Смотрите и слушайте немецкий
           </h2>
           <p className="text-sm text-slate-600 max-w-2xl">
-            Короткие видеоуроки к учебнику. Выберите урок в списке справа — плеер переключится автоматически.
+            Короткие видеоуроки к учебнику. Выберите урок в списке справа.
           </p>
         </div>
         <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">

@@ -80,6 +80,21 @@ export const BookReader: React.FC = () => {
     }
   };
 
+  // Click / tap on a spread: left 40% = previous page, rest = next page.
+  // Ignores clicks on interactive elements and active text selection.
+  const handleSpreadClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('button, a, input, select, textarea, [data-no-flip]')) return;
+    if (window.getSelection()?.toString()) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    if (x < rect.width * 0.4) {
+      handlePrevPage();
+    } else {
+      handleNextPage();
+    }
+  };
+
   // Keyboard navigation (ArrowLeft / ArrowRight)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -292,13 +307,13 @@ export const BookReader: React.FC = () => {
       )}
 
       {/* 2. THE MAIN FULL-WIDTH BOOK STAGE */}
-      <div className={`relative flex items-center justify-center gap-1.5 sm:gap-3 py-2 sm:py-4 w-full ${isFullscreen ? 'flex-1 my-auto min-h-0' : 'md:min-h-[480px]'}`}>
+      <div className={`relative flex items-center justify-center gap-1.5 sm:gap-3 py-2 sm:py-4 w-full overflow-x-hidden ${isFullscreen ? 'flex-1 my-auto min-h-0' : 'md:min-h-[480px]'}`}>
 
         {/* Previous Page Arrow — скрыты на телефоне, чтобы не перекрывать текст и не сдвигать центр */}
         <button
           onClick={handlePrevPage}
           disabled={currentView === 0}
-          className={`hidden sm:flex shrink-0 self-start mt-56 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/95 hover:bg-white text-slate-800 border border-stone-300 shadow-xl items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95 disabled:opacity-20 disabled:pointer-events-none ${
+          className={`flex shrink-0 self-start mt-24 sm:mt-56 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/95 hover:bg-white text-slate-800 border border-stone-300 shadow-xl items-center justify-center transition-all cursor-pointer active:scale-95 disabled:opacity-20 disabled:pointer-events-none ${
             currentView === 0 ? 'invisible' : 'visible'
           }`}
           title="Предыдущая страница (Клавиша стрелка влево)"
@@ -310,7 +325,7 @@ export const BookReader: React.FC = () => {
         <button
           onClick={handleNextPage}
           disabled={currentView === totalViews - 1}
-          className={`hidden sm:flex shrink-0 self-start mt-56 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/95 hover:bg-white text-slate-800 border border-stone-300 shadow-xl items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95 disabled:opacity-20 disabled:pointer-events-none ${
+          className={`flex shrink-0 self-start mt-24 sm:mt-56 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/95 hover:bg-white text-slate-800 border border-stone-300 shadow-xl items-center justify-center transition-all cursor-pointer active:scale-95 disabled:opacity-20 disabled:pointer-events-none ${
             currentView === totalViews - 1 ? 'invisible' : 'visible'
           }`}
           title="Следующая страница (Клавиша стрелка вправо)"
@@ -342,13 +357,13 @@ export const BookReader: React.FC = () => {
           {/* VIEW 1: SPREAD 1 (Pages 2-3: Real Printed Book Spread)    */}
           {/* ========================================================= */}
           {currentView === 1 && (
-            <div className={`grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl md:min-h-[640px]'} min-w-0`}>
+            <div onClick={handleSpreadClick} className={`grid grid-cols-1 sm:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl md:min-h-[640px]'} min-w-0`}>
               
               {/* Realistic Book Spine Center Shadow */}
-              <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-10 bg-gradient-to-r from-transparent via-black/10 to-transparent pointer-events-none z-20" />
+              <div className="hidden sm:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-10 bg-gradient-to-r from-transparent via-black/10 to-transparent pointer-events-none z-20" />
 
               {/* LEFT PAGE: Page 2 (Title Page & Formal Imprint) */}
-              <div className="p-6 sm:p-10 border-b md:border-b-0 md:border-r border-stone-200/90 flex flex-col justify-between text-stone-800 font-serif leading-relaxed relative">
+              <div className="p-4 sm:p-10 border-b sm:border-b-0 sm:border-r border-stone-200/90 flex flex-col justify-between text-stone-800 font-serif leading-relaxed relative">
                 
                 {/* Running Header */}
                 <div className="text-[10px] uppercase font-sans tracking-widest text-stone-400 pb-4 border-b border-stone-200 flex justify-between">
@@ -398,7 +413,7 @@ export const BookReader: React.FC = () => {
               </div>
 
               {/* RIGHT PAGE: Page 3 (Expanded Official Book Annotation) */}
-              <div className="p-6 sm:p-10 flex flex-col justify-between text-stone-800 leading-relaxed relative bg-[#FAF8F5]">
+              <div className="p-4 sm:p-10 flex flex-col justify-between text-stone-800 leading-relaxed relative bg-[#FAF8F5]">
                 
                 {/* Running Header */}
                 <div className="text-[10px] uppercase font-sans tracking-widest text-stone-400 pb-4 border-b border-stone-200 flex justify-between">
@@ -456,11 +471,11 @@ export const BookReader: React.FC = () => {
           {/* VIEW 2: SPREAD 2 (Pages 4-5: Letter from Authors & Index) */}
           {/* ========================================================= */}
           {currentView === 2 && (
-            <div className={`grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl md:min-h-[640px]'} min-w-0`}>
-              <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-10 bg-gradient-to-r from-transparent via-black/10 to-transparent pointer-events-none z-20" />
+            <div onClick={handleSpreadClick} className={`grid grid-cols-1 sm:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl md:min-h-[640px]'} min-w-0`}>
+              <div className="hidden sm:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-10 bg-gradient-to-r from-transparent via-black/10 to-transparent pointer-events-none z-20" />
 
               {/* LEFT PAGE: Page 4 (Letter from Authors) */}
-              <div className="p-6 sm:p-10 border-b md:border-b-0 md:border-r border-stone-200/90 flex flex-col justify-between text-stone-800 font-serif leading-relaxed">
+              <div className="p-4 sm:p-10 border-b sm:border-b-0 sm:border-r border-stone-200/90 flex flex-col justify-between text-stone-800 font-serif leading-relaxed">
                 <div className="text-[10px] uppercase font-sans tracking-widest text-stone-400 pb-4 border-b border-stone-200 flex justify-between">
                   <span>Вступительное слово</span>
                   <span>Liebe Schülerinnen und Schüler!</span>
@@ -507,7 +522,7 @@ export const BookReader: React.FC = () => {
               </div>
 
               {/* RIGHT PAGE: Page 5 (Table of Contents / Inhaltsverzeichnis) */}
-              <div className="p-6 sm:p-10 flex flex-col justify-between text-stone-800 leading-relaxed bg-[#FAF8F5]">
+              <div className="p-4 sm:p-10 flex flex-col justify-between text-stone-800 leading-relaxed bg-[#FAF8F5]">
                 <div className="text-[10px] uppercase font-sans tracking-widest text-stone-400 pb-4 border-b border-stone-200 flex justify-between">
                   <span>Оглавление</span>
                   <span>Inhaltsverzeichnis</span>
@@ -559,11 +574,11 @@ export const BookReader: React.FC = () => {
           {/* VIEW 3: SPREAD 3 (Pages 6-7: Real Lesson 1 Dialogues & Art)*/}
           {/* ========================================================= */}
           {currentView === 3 && (
-            <div className={`grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl md:min-h-[640px]'} min-w-0`}>
-              <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-10 bg-gradient-to-r from-transparent via-black/10 to-transparent pointer-events-none z-20" />
+            <div onClick={handleSpreadClick} className={`grid grid-cols-1 sm:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl md:min-h-[640px]'} min-w-0`}>
+              <div className="hidden sm:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-10 bg-gradient-to-r from-transparent via-black/10 to-transparent pointer-events-none z-20" />
 
               {/* LEFT PAGE: Page 6 (Comic Dialogues) */}
-              <div className="p-6 sm:p-10 border-b md:border-b-0 md:border-r border-stone-200/90 flex flex-col justify-between text-stone-800 leading-relaxed font-sans">
+              <div className="p-4 sm:p-10 border-b sm:border-b-0 sm:border-r border-stone-200/90 flex flex-col justify-between text-stone-800 leading-relaxed font-sans">
                 <div className="text-[10px] uppercase tracking-widest text-amber-700 font-bold pb-4 border-b border-stone-200 flex justify-between">
                   <span>Kapitel 1 • Lektion 1</span>
                   <span>Hallo! Das bin ich!</span>
@@ -663,7 +678,7 @@ export const BookReader: React.FC = () => {
               </div>
 
               {/* RIGHT PAGE: Page 7 (Wortschatz & Interactive Exercise) */}
-              <div className="p-6 sm:p-10 flex flex-col justify-between text-stone-800 leading-relaxed font-sans bg-[#FAF8F5]">
+              <div className="p-4 sm:p-10 flex flex-col justify-between text-stone-800 leading-relaxed font-sans bg-[#FAF8F5]">
                 <div className="text-[10px] uppercase tracking-widest text-stone-400 pb-4 border-b border-stone-200 flex justify-between">
                   <span>Практика и словарная копилка</span>
                   <span>Wortschatzkiste</span>
@@ -687,8 +702,9 @@ export const BookReader: React.FC = () => {
                         { de: 'keine Panik!', ru: 'без паники!' },
                         { de: 'Alles klar!', ru: 'Всё ясно / порядок!' },
                       ].map((word, i) => (
-                        <div 
+                        <div
                           key={i}
+                          data-no-flip
                           onClick={() => speakGerman(word.de)}
                           className="p-2 rounded-lg bg-white border border-amber-200 hover:border-amber-400 flex items-center justify-between cursor-pointer transition-colors shadow-2xs"
                           title="Нажми, чтобы послушать"
@@ -768,11 +784,11 @@ export const BookReader: React.FC = () => {
           {/* VIEW 4: SPREAD 4 (Pages 8-9: Lesson 2 School Day & Grades) */}
           {/* ========================================================= */}
           {currentView === 4 && (
-            <div className={`grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl md:min-h-[640px]'} min-w-0`}>
-              <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-10 bg-gradient-to-r from-transparent via-black/10 to-transparent pointer-events-none z-20" />
+            <div onClick={handleSpreadClick} className={`grid grid-cols-1 sm:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl md:min-h-[640px]'} min-w-0`}>
+              <div className="hidden sm:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-10 bg-gradient-to-r from-transparent via-black/10 to-transparent pointer-events-none z-20" />
 
               {/* LEFT PAGE: Page 8 (School Routine & Grades System) */}
-              <div className="p-6 sm:p-10 border-b md:border-b-0 md:border-r border-stone-200/90 flex flex-col justify-between text-stone-800 leading-relaxed font-sans">
+              <div className="p-4 sm:p-10 border-b sm:border-b-0 sm:border-r border-stone-200/90 flex flex-col justify-between text-stone-800 leading-relaxed font-sans">
                 <div className="text-[10px] uppercase tracking-widest text-amber-700 font-bold pb-4 border-b border-stone-200 flex justify-between">
                   <span>Kapitel 2 • Die Schule</span>
                   <span>Noten & Schulalltag</span>
@@ -822,7 +838,7 @@ export const BookReader: React.FC = () => {
               </div>
 
               {/* RIGHT PAGE: Page 9 (Subjects & Canteen dialogue) */}
-              <div className="p-6 sm:p-10 flex flex-col justify-between text-stone-800 leading-relaxed font-sans bg-[#FAF8F5]">
+              <div className="p-4 sm:p-10 flex flex-col justify-between text-stone-800 leading-relaxed font-sans bg-[#FAF8F5]">
                 <div className="text-[10px] uppercase tracking-widest text-stone-400 pb-4 border-b border-stone-200 flex justify-between">
                   <span>Школьные предметы</span>
                   <span>Lieblingsfächer</span>
@@ -890,11 +906,11 @@ export const BookReader: React.FC = () => {
           {/* VIEW 5: SPREAD 5 (Pages 10-11: DACH & Secret Slang Dictionary) */}
           {/* ========================================================= */}
           {currentView === 5 && (
-            <div className={`grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl md:min-h-[640px]'} min-w-0`}>
-              <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-10 bg-gradient-to-r from-transparent via-black/10 to-transparent pointer-events-none z-20" />
+            <div onClick={handleSpreadClick} className={`grid grid-cols-1 sm:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl md:min-h-[640px]'} min-w-0`}>
+              <div className="hidden sm:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-10 bg-gradient-to-r from-transparent via-black/10 to-transparent pointer-events-none z-20" />
 
               {/* LEFT PAGE: Page 10 (DACH Countries) */}
-              <div className="p-6 sm:p-10 border-b md:border-b-0 md:border-r border-stone-200/90 flex flex-col justify-between text-stone-800 leading-relaxed font-sans">
+              <div className="p-4 sm:p-10 border-b sm:border-b-0 sm:border-r border-stone-200/90 flex flex-col justify-between text-stone-800 leading-relaxed font-sans">
                 <div className="text-[10px] uppercase tracking-widest text-amber-700 font-bold pb-4 border-b border-stone-200 flex justify-between">
                   <span>Landeskunde DACH</span>
                   <span>Deutschland • Österreich • Schweiz</span>
@@ -950,7 +966,7 @@ export const BookReader: React.FC = () => {
               </div>
 
               {/* RIGHT PAGE: Page 11 (Secret Slang Dictionary) */}
-              <div className="p-6 sm:p-10 flex flex-col justify-between text-stone-800 leading-relaxed font-sans bg-[#FAF8F5]">
+              <div className="p-4 sm:p-10 flex flex-col justify-between text-stone-800 leading-relaxed font-sans bg-[#FAF8F5]">
                 <div className="text-[10px] uppercase tracking-widest text-stone-400 pb-4 border-b border-stone-200 flex justify-between">
                   <span>Молодежный сленг</span>
                   <span>Geheimes Slang-Lexikon</span>
@@ -974,8 +990,9 @@ export const BookReader: React.FC = () => {
                       { word: 'Der Ohrwurm', meaning: 'песня, которая застряла в голове', ex: '„Das Lied ist ein echter Ohrwurm!“' },
                       { word: 'Cringe', meaning: 'неловко, кринжово', ex: '„Das Video war so cringe!“' }
                     ].map((item, i) => (
-                      <div 
+                      <div
                         key={i}
+                        data-no-flip
                         onClick={() => speakGerman(`${item.word}! ${item.ex}`)}
                         className="p-2 rounded-xl bg-white border border-stone-200 hover:border-amber-400 flex items-start justify-between cursor-pointer transition-colors shadow-2xs"
                       >
@@ -1045,7 +1062,7 @@ export const BookReader: React.FC = () => {
           <button
             onClick={handlePrevPage}
             disabled={currentView === 0}
-            className="px-3 py-1.5 rounded-xl bg-white hover:bg-stone-50 border border-stone-200 text-slate-700 font-semibold disabled:opacity-30 cursor-pointer shadow-xs"
+            className="px-4 py-2.5 rounded-xl bg-white hover:bg-stone-50 border border-stone-200 text-slate-700 font-semibold disabled:opacity-30 cursor-pointer shadow-xs"
           >
             ← Назад
           </button>
@@ -1055,7 +1072,7 @@ export const BookReader: React.FC = () => {
           <button
             onClick={handleNextPage}
             disabled={currentView === totalViews - 1}
-            className="px-3 py-1.5 rounded-xl bg-white hover:bg-stone-50 border border-stone-200 text-slate-700 font-semibold disabled:opacity-30 cursor-pointer shadow-xs"
+            className="px-4 py-2.5 rounded-xl bg-white hover:bg-stone-50 border border-stone-200 text-slate-700 font-semibold disabled:opacity-30 cursor-pointer shadow-xs"
           >
             Вперёд →
           </button>

@@ -78,7 +78,7 @@ export const BookPagesSection: React.FC = () => {
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
           <span>
-            <strong>Режим чтения:</strong> листайте страницы стрелками <kbd className="px-1.5 py-0.5 rounded bg-white border border-stone-300 font-mono text-[10px]">←</kbd> / <kbd className="px-1.5 py-0.5 rounded bg-white border border-stone-300 font-mono text-[10px]">→</kbd> или кликом по развороту
+            <strong>Режим чтения:</strong> листайте страницы стрелками <kbd className="px-1.5 py-0.5 rounded bg-white border border-stone-300 font-mono text-[10px]">←</kbd> / <kbd className="px-1.5 py-0.5 rounded bg-white border border-stone-300 font-mono text-[10px]">→</kbd>, кнопками по краям разворота или кликом по самой странице (слева — назад, справа — вперёд)
           </span>
         </div>
         <div className="flex items-center gap-3 text-[11px] text-slate-500">
