@@ -64,7 +64,7 @@ export const BookReader: React.FC = () => {
     'Стр. 4–5: От авторов & Содержание',
     'Стр. 6–7: Урок 1. Hallo! Das bin ich!',
     'Стр. 8–9: Урок 2. Die Schule & Schulalltag',
-    'Стр. 10–11: DACH-культура & Секретный сленг',
+    'Стр. 10–11: DACH-культура',
     'Оборот (Задняя обложка, ISBN)'
   ];
 
@@ -292,13 +292,13 @@ export const BookReader: React.FC = () => {
       )}
 
       {/* 2. THE MAIN FULL-WIDTH BOOK STAGE */}
-      <div className={`relative flex items-center justify-center py-2 sm:py-4 w-full max-w-full ${isFullscreen ? 'flex-1 my-auto min-h-0' : ''}`}>
+      <div className={`relative flex items-center justify-center gap-1.5 sm:gap-3 py-2 sm:py-4 w-full ${isFullscreen ? 'flex-1 my-auto min-h-0' : 'md:min-h-[480px]'}`}>
 
         {/* Previous Page Arrow — скрыты на телефоне, чтобы не перекрывать текст и не сдвигать центр */}
         <button
           onClick={handlePrevPage}
           disabled={currentView === 0}
-          className={`hidden sm:flex absolute left-1 sm:left-2 lg:left-4 z-30 w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-white/95 hover:bg-white text-slate-800 border border-stone-300 shadow-xl items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95 disabled:opacity-20 disabled:pointer-events-none ${
+          className={`hidden sm:flex shrink-0 self-start mt-56 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/95 hover:bg-white text-slate-800 border border-stone-300 shadow-xl items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95 disabled:opacity-20 disabled:pointer-events-none ${
             currentView === 0 ? 'invisible' : 'visible'
           }`}
           title="Предыдущая страница (Клавиша стрелка влево)"
@@ -310,7 +310,7 @@ export const BookReader: React.FC = () => {
         <button
           onClick={handleNextPage}
           disabled={currentView === totalViews - 1}
-          className={`hidden sm:flex absolute right-1 sm:right-2 lg:right-4 z-30 w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-white/95 hover:bg-white text-slate-800 border border-stone-300 shadow-xl items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95 disabled:opacity-20 disabled:pointer-events-none ${
+          className={`hidden sm:flex shrink-0 self-start mt-56 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/95 hover:bg-white text-slate-800 border border-stone-300 shadow-xl items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95 disabled:opacity-20 disabled:pointer-events-none ${
             currentView === totalViews - 1 ? 'invisible' : 'visible'
           }`}
           title="Следующая страница (Клавиша стрелка вправо)"
@@ -321,7 +321,7 @@ export const BookReader: React.FC = () => {
         {/* BOOK CONTAINER WITH ZOOM & FULLSCREEN EXPANSION */}
         <div
           style={{ transform: `scale(${zoomLevel / 100})`, transformOrigin: 'top center' }}
-          className={`book-zoom-wrapper transition-transform duration-200 w-full flex justify-center mx-auto min-w-0 max-w-full sm:max-w-5xl px-0 ${
+          className={`book-zoom-wrapper transition-transform duration-200 flex-1 flex justify-center mx-auto min-w-0 max-w-full sm:max-w-5xl px-0 ${
             isFullscreen ? 'my-auto h-auto' : ''
           }`}
         >
@@ -342,7 +342,7 @@ export const BookReader: React.FC = () => {
           {/* VIEW 1: SPREAD 1 (Pages 2-3: Real Printed Book Spread)    */}
           {/* ========================================================= */}
           {currentView === 1 && (
-            <div className={`grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl'} min-w-0`}>
+            <div className={`grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl md:min-h-[640px]'} min-w-0`}>
               
               {/* Realistic Book Spine Center Shadow */}
               <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-10 bg-gradient-to-r from-transparent via-black/10 to-transparent pointer-events-none z-20" />
@@ -456,7 +456,7 @@ export const BookReader: React.FC = () => {
           {/* VIEW 2: SPREAD 2 (Pages 4-5: Letter from Authors & Index) */}
           {/* ========================================================= */}
           {currentView === 2 && (
-            <div className={`grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl'} min-w-0`}>
+            <div className={`grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl md:min-h-[640px]'} min-w-0`}>
               <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-10 bg-gradient-to-r from-transparent via-black/10 to-transparent pointer-events-none z-20" />
 
               {/* LEFT PAGE: Page 4 (Letter from Authors) */}
@@ -559,7 +559,7 @@ export const BookReader: React.FC = () => {
           {/* VIEW 3: SPREAD 3 (Pages 6-7: Real Lesson 1 Dialogues & Art)*/}
           {/* ========================================================= */}
           {currentView === 3 && (
-            <div className={`grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl'} min-w-0`}>
+            <div className={`grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl md:min-h-[640px]'} min-w-0`}>
               <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-10 bg-gradient-to-r from-transparent via-black/10 to-transparent pointer-events-none z-20" />
 
               {/* LEFT PAGE: Page 6 (Comic Dialogues) */}
@@ -768,7 +768,7 @@ export const BookReader: React.FC = () => {
           {/* VIEW 4: SPREAD 4 (Pages 8-9: Lesson 2 School Day & Grades) */}
           {/* ========================================================= */}
           {currentView === 4 && (
-            <div className={`grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl'} min-w-0`}>
+            <div className={`grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl md:min-h-[640px]'} min-w-0`}>
               <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-10 bg-gradient-to-r from-transparent via-black/10 to-transparent pointer-events-none z-20" />
 
               {/* LEFT PAGE: Page 8 (School Routine & Grades System) */}
@@ -890,7 +890,7 @@ export const BookReader: React.FC = () => {
           {/* VIEW 5: SPREAD 5 (Pages 10-11: DACH & Secret Slang Dictionary) */}
           {/* ========================================================= */}
           {currentView === 5 && (
-            <div className={`grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl'} min-w-0`}>
+            <div className={`grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-stone-300 bg-[#FAF8F5] relative select-text w-full ${isFullscreen ? 'w-full max-w-7xl min-h-[calc(100dvh-180px)]' : 'max-w-5xl md:min-h-[640px]'} min-w-0`}>
               <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-10 bg-gradient-to-r from-transparent via-black/10 to-transparent pointer-events-none z-20" />
 
               {/* LEFT PAGE: Page 10 (DACH Countries) */}

@@ -17,6 +17,7 @@ import { AnnotationSection } from './components/AnnotationSection';
 import { InteractiveHat } from './components/InteractiveHat';
 import { TopicsSection } from './components/TopicsSection';
 import { BookPagesSection } from './components/BookPagesSection';
+import { VideoLessonsSection } from './components/VideoLessonsSection';
 import { Footer } from './components/Footer';
 import { BOOK_METADATA, speakGerman } from './data/bookData';
 import { AppTab } from './types';
@@ -24,6 +25,21 @@ import { AppTab } from './types';
 export default function App() {
   const [activeTab, setActiveTab] = useState<AppTab>('annotation');
 
+  const TAB_ANCHORS: Record<AppTab, string> = {
+    annotation: 'annotation-card',
+    topics: 'topics-section',
+    practice: 'interactive-practice',
+    textbook: 'book-pages-section',
+    videos: 'video-lessons-section',
+  };
+
+  const handleSelectTab = (tab: AppTab) => {
+    setActiveTab(tab);
+    setTimeout(() => {
+      const el = document.getElementById(TAB_ANCHORS[tab]);
+      el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  };
   const scrollToPractice = () => {
     setActiveTab('practice');
     setTimeout(() => {
@@ -52,9 +68,9 @@ export default function App() {
     <div className="min-h-screen flex flex-col bg-[#faf9f6] text-slate-900 selection:bg-amber-300 selection:text-neutral-900">
       
       {/* Top Navigation */}
-      <Header 
-        activeTab={activeTab} 
-        onSelectTab={setActiveTab} 
+      <Header
+        activeTab={activeTab}
+        onSelectTab={handleSelectTab}
       />
 
       {/* Main Content Body */}
@@ -189,6 +205,11 @@ export default function App() {
         {/* SECTION 4: TEXTBOOK (COVER, SPREAD & PDF DOWNLOAD) */}
         {activeTab === 'textbook' && (
           <BookPagesSection />
+        )}
+
+        {/* SECTION 5: VIDEO LESSONS */}
+        {activeTab === 'videos' && (
+          <VideoLessonsSection />
         )}
 
         {/* When in annotation mode, also show the interactive practice below it as requested */}

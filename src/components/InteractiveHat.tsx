@@ -178,7 +178,7 @@ export const InteractiveHat: React.FC = () => {
   };
 
   return (
-    <section id="interactive-practice" className="bg-white rounded-3xl p-4 sm:p-8 lg:p-10 shadow-sm border border-stone-200/90 relative">
+    <section id="interactive-practice" className="scroll-mt-24 bg-white rounded-3xl p-4 sm:p-8 lg:p-10 shadow-sm border border-stone-200/90 relative">
       
       {/* Section Header without any "hat" references */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-stone-100">

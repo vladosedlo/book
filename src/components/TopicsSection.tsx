@@ -16,6 +16,19 @@ import {
 import { BOOK_TOPICS, speakGerman } from '../data/bookData';
 import { BookTopic } from '../types';
 
+// Ссылки на интерактивные задания по каждой теме.
+const TOPIC_TASK_LINKS: Record<string, string> = {
+  schule: 'https://learningapps.org/display?v=ppqcqasrc26',      // Школа (Schule)
+  freunde: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',     // Друзья (Freunde)
+  familie: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',     // Семья (Familie)
+  hobbys: 'https://learningapps.org/display?v=pjsp9wi5526',      // Хобби (Hobbys)
+  musik: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',       // Музыка (Musik)
+  sport: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',       // Спорт (Sport)
+  spiele: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',      // Игры (Spiele)
+  reisen: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',      // Путешествия (Reisen)
+  socialmedia: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // Социальные сети (Social Media)
+};
+
 export const TopicsSection: React.FC = () => {
   const [selectedTopic, setSelectedTopic] = useState<BookTopic>(BOOK_TOPICS[0]);
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -42,7 +55,7 @@ export const TopicsSection: React.FC = () => {
   );
 
   return (
-    <section id="topics-section" className="bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-stone-200/90">
+    <section id="topics-section" className="scroll-mt-24 bg-white rounded-3xl p-6 sm:p-12 shadow-sm border border-stone-200/90">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-stone-100">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-100 text-rose-800 text-xs font-bold mb-2">
@@ -74,7 +87,7 @@ export const TopicsSection: React.FC = () => {
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Topic Grid List */}
-        <div className="lg:col-span-5 space-y-2 max-h-[500px] overflow-y-auto pr-1">
+        <div className="lg:col-span-5 space-y-2 max-h-[620px] overflow-y-auto pr-1">
           {filteredTopics.map((topic) => {
             const isSelected = selectedTopic.id === topic.id;
             return (
@@ -169,9 +182,20 @@ export const TopicsSection: React.FC = () => {
             </div>
           </div>
 
-          <div className="pt-4 mt-6 border-t border-stone-200/80 text-xs text-slate-400 flex justify-between items-center">
-            <span>Учебный блок A1–A2</span>
-            <span>Comics &amp; Games Inside</span>
+          <div className="pt-5 mt-6 border-t border-stone-200/80 space-y-4">
+            <div className="text-xs text-slate-400 flex justify-between items-center">
+              <span>Учебный блок A1–A2</span>
+              <span>Comics &amp; Games Inside</span>
+            </div>
+
+            <a
+              id="topic-interactive-task-btn"
+              href={TOPIC_TASK_LINKS[selectedTopic.id] || '#'}
+              className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold text-sm sm:text-base shadow-md hover:shadow-lg transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+            >
+              <Sparkles className="w-5 h-5" />
+              <span>Пройти интерактивное задание по теме</span>
+            </a>
           </div>
 
         </div>

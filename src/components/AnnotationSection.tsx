@@ -40,7 +40,7 @@ export const AnnotationSection: React.FC<AnnotationSectionProps> = ({
     <div className="space-y-12">
       
       {/* Primary Annotation Card */}
-      <section id="annotation-card" className="bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-stone-200/90 relative overflow-hidden">
+      <section id="annotation-card" className="scroll-mt-24 bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-stone-200/90 relative overflow-hidden">
         
         {/* Subtle Decorative Accents */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-amber-100/50 via-rose-50/30 to-transparent rounded-full -mr-20 -mt-20 pointer-events-none" />

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Volume2, Sparkles, BookOpen, Layers, FileText, Check, ChevronDown, Play, Square } from 'lucide-react';
+import { Sparkles, BookOpen, Layers, FileText, ChevronDown, Play, Square } from 'lucide-react';
 import { speakGerman, getSelectedVoiceAgent, previewVoiceAgent, stopSpeaking, VoiceAgent } from '../data/bookData';
 import { VoiceAgentModal } from './VoiceAgentModal';
 
-export type HeaderTab = 'annotation' | 'topics' | 'practice' | 'textbook';
+export type HeaderTab = 'annotation' | 'topics' | 'practice' | 'textbook' | 'videos';
 
 interface HeaderProps {
   activeTab: HeaderTab;
@@ -52,10 +52,10 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, onSelectTab }) => {
           <div className="flex items-center justify-between h-16 sm:h-20 gap-3">
             
             {/* Logo & Textbook Brand */}
-            <div 
-              className="flex items-center gap-2.5 sm:gap-3 cursor-pointer shrink min-w-0" 
-              onClick={() => onSelectTab('annotation')}
-              title="Главная страница учебника"
+            <div
+              className="flex items-center gap-2.5 sm:gap-3 cursor-pointer shrink min-w-0"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              title="В начало страницы"
             >
               <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-slate-950 p-0.5 shadow-md flex items-center justify-center border border-slate-800 shrink-0">
                 <div className="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center">
@@ -127,6 +127,19 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, onSelectTab }) => {
               >
                 <FileText className="w-3.5 h-3.5 text-blue-500" />
                 <span>Учебник</span>
+              </button>
+
+              <button
+                id="nav-btn-videos"
+                onClick={() => onSelectTab('videos')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  activeTab === 'videos'
+                    ? 'bg-white text-slate-900 shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+                }`}
+              >
+                <span className="text-sm leading-none select-none">🎥</span>
+                <span>Видеоуроки</span>
               </button>
             </nav>
 
@@ -219,6 +232,16 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, onSelectTab }) => {
             }`}
           >
             Учебник
+          </button>
+          <button
+            onClick={() => onSelectTab('videos')}
+            className={`px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition-colors ${
+              activeTab === 'videos'
+                ? 'bg-slate-950 text-white shadow-xs'
+                : 'bg-stone-100 text-slate-700 hover:bg-stone-200'
+            }`}
+          >
+            🎥 Видеоуроки
           </button>
         </div>
 

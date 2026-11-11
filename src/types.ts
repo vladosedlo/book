@@ -49,5 +49,14 @@ export interface DachCountryFact {
   teenCultureFact: string;
 }
 
-export type AppTab = 'annotation' | 'topics' | 'practice' | 'textbook';
+export interface VideoLesson {
+  id: string;
+  title: string;
+  description: string;
+  duration: string;
+  src: string;
+  poster?: string;
+}
+
+export type AppTab = 'annotation' | 'topics' | 'practice' | 'textbook' | 'videos';
 

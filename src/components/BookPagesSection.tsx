@@ -32,7 +32,7 @@ export const BookPagesSection: React.FC = () => {
   };
 
   return (
-    <section id="book-pages-section" className="bg-white rounded-3xl p-4 sm:p-8 lg:p-10 shadow-sm border border-stone-200/90 space-y-6">
+    <section id="book-pages-section" className="scroll-mt-24 bg-white rounded-3xl p-4 sm:p-8 lg:p-10 shadow-sm border border-stone-200/90 space-y-6">
       
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-stone-100">
