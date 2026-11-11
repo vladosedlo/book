@@ -8,7 +8,7 @@ const VIDEO_LESSONS: VideoLesson[] = [
     title: 'Видеоурок-1',
     description: 'Определенные и неопределенные артикли.',
     duration: '02:46',
-    src: '/videos/lesson-1.MOV',
+    src: '/videos/lesson-1.mp4',
   },
   {
     id: 'lesson-2',
